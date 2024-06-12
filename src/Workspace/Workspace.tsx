@@ -1,28 +1,14 @@
-import { useNavigate } from "react-router-dom";
-import Button from "../SharedComponents/Button";
-import {auth} from "../firebase";
-import { signOut } from "firebase/auth";
+import BoardPage from "./Board";
+import Navigation from "./Navigation";
 
 
 function Workspace() {
-    const navigate = useNavigate();
-    const handleLogout = async () => {
-        try {
-            await signOut( auth);
-            navigate("/login");
-        } catch (error) {
-            console.error("Error logging in:", error);
-        }
-    };
+   
     return (
-       <div><div>Workspace works</div>
-        <Button
-                    icon={null}
-                    onClick={handleLogout}
-                    label="Logout"
-                    size="lg"
-                />
-        </div>
+      <div className="flex flex-col w-screen h-screen">
+        <Navigation />
+        <BoardPage />
+      </div>
        
     );
   }

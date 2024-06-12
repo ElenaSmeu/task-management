@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { AppContext, DeviceType } from "../Context/AppContext";
-import LogoDesktop from "../resources/LogoDesktop.png";
-import LogoMobile from "../resources/LogoMobile.png";
+import LogoDesktop from "../Resources/LogoDesktop.png";
+import LogoMobile from "../Resources/LogoMobile.png";
 
 function renderLogo(deviceContext: DeviceType) {
     switch(deviceContext)
