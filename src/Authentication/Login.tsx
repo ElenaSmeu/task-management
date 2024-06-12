@@ -3,9 +3,9 @@ import { AppContext } from "../Context/AppContext";
 import LogoEntry from "../SharedComponents/EntryPageLogo";
 import Button from "../SharedComponents/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBackward, faChevronLeft, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import { faChevronLeft, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { faEye } from "@fortawesome/free-regular-svg-icons";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {auth} from "../firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 
@@ -64,12 +64,16 @@ function Login(props: { appContext: AppContext }) {
                         <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
                     </button>
                 </div>
-                <Button
+                <div className="flex flex-col items-center">
+                    <Button
                     icon={null}
                     onClick={handleLogin}
                     label="Login"
                     size="lg"
-                />
+                /> <Link to={"/signup"} className="underline pt-4">Signup</Link>
+                </div>
+                
+               
             </div>
         </div>
     </div>

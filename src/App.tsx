@@ -1,14 +1,14 @@
-/* eslint-disable react/jsx-no-undef */
 import React, {useContext} from 'react';
 import LandingPage from './LandingPage';
 import { AppContext } from './Context/AppContext';
 import { useMediaQuery } from 'react-responsive';
 import Login from './Authentication/Login';
 import SignUp from './Authentication/Signup';
-import { Route, Routes, Navigate } from 'react-router-dom';
+import { Route, Routes, Navigate, useLocation } from 'react-router-dom';
 import AuthContext, { AuthProvider } from './Context/AuthContext';
 import Workspace from './Workspace/Workspace';
-
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import './App.css';
 
 function App() {
   const isBigScreen = useMediaQuery({ query: '(min-width: 1824px)' })
@@ -17,20 +17,7 @@ function App() {
   return (
     <div className="App w-screen h-screen">
       <AuthProvider>
-        <Routes>
-         
-              <Route path='/' element={<LandingPage appContext={appContext} />}></Route>
-              <Route path="/login" element={<Login appContext={appContext}/>} ></Route>
-              <Route path="/signup" element={<SignUp appContext={appContext}/>} ></Route>
-              <Route 
-              path='/workspace' 
-              element={
-                <ProtectedRoute>
-                  <Workspace />
-                </ProtectedRoute>
-              } 
-            />
-        </Routes>
+        <AnimatedRoutes appContext={appContext}></AnimatedRoutes>
        
       </AuthProvider>
      
@@ -50,6 +37,28 @@ function ProtectedRoute({ children }: ProtectedRouteProps) {
   }
 
   return currentUser ? <>{children}</> : <Navigate to="/login" />;
+}
+function AnimatedRoutes({appContext}: {appContext: AppContext}) {
+  const location = useLocation();
+  return (
+    <TransitionGroup>
+       <CSSTransition key={location.key} classNames="fade" timeout={300}>
+        <Routes location={location}>
+          <Route path='/' element={<LandingPage appContext={appContext} />} />
+          <Route path="/login" element={<Login appContext={appContext} />} />
+          <Route path="/signup" element={<SignUp appContext={appContext} />} />
+          <Route 
+            path='/workspace' 
+            element={
+              <ProtectedRoute>
+                <Workspace />
+              </ProtectedRoute>
+            } 
+          />
+        </Routes>
+      </CSSTransition>
+    </TransitionGroup>
+  )
 }
 
 

@@ -5,7 +5,7 @@ import Button from "../SharedComponents/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { faEye } from "@fortawesome/free-regular-svg-icons";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {auth} from "../firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 
@@ -17,7 +17,7 @@ function SignUp( props: {appContext: AppContext}) {
     const handleSignUp =  async () => {
         try {
             await createUserWithEmailAndPassword(auth, email, password);
-            console.log("User signed up successfully");
+            navigate("/login")
         } catch (error) {
             console.error("Error signing up:", error);
         }
@@ -58,12 +58,15 @@ function SignUp( props: {appContext: AppContext}) {
                         <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
                     </button>
                 </div>
+            <div className="flex flex-col items-center">
             <Button
                 icon={null}
                 onClick={handleSignUp}
                 label="Sign Up"
                 size="lg"
             />
+            <Link to={"/login"} className="underline pt-4">Login</Link>
+            </div>
         </div>
     </div>
         </div>
