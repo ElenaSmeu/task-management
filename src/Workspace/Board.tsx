@@ -15,15 +15,15 @@ function BoardPage() {
       };
       fetchBoards();
     }, []);
-    // const handleCreateBoard = async () => {
-    //     const newBoardId = await createBoard('New Board', 'Description', currentUser.uid);
-    //     const newBoard = { id: newBoardId, name: 'New Board', description: 'Description', createdBy: currentUser.uid };
-    //     setBoards([...boards, newBoard]);
-    // }
+    const handleCreateBoard = async () => {
+        const newBoardId = await createBoard('New Board', 'Description', currentUser.uid);
+        const newBoard = { id: newBoardId, name: 'New Board', description: 'Description', createdBy: currentUser.uid };
+        setBoards([...boards, newBoard]);
+    }
     return (
         <div>
         <h1>Boards</h1>
-        {/* <button onClick={handleCreateBoard}>Create Board</button> */}
+        <button onClick={handleCreateBoard}>Create Board</button>
         <ul>
           {boards.map(board => (
             <li key={board.id}>
