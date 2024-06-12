@@ -11,7 +11,7 @@ function LandingPage( props: {appContext: AppContext}) {
   const navigateToLogin = () => {navigate("/login")}
   const navigateToSignUp = () => {navigate("/signup")}
   return (
-    <div className="flex flex-col h-full techFont bg-gray-100">
+    <div className="flex flex-col h-screen techFont bg-gray-100">
     <LogoEntry appContext={props.appContext}></LogoEntry>
     <div className="w-auto pt-20 flex flex-row justify-center">
         <div className="flex flex-col justify-center items-center">
