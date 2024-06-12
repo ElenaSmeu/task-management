@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { AppContext } from "./Models/AppContext";
+import { AppContext } from "./Context/AppContext";
 import Button from "./SharedComponents/Button";
 import { faArrowDownLong } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";

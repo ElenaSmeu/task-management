@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { AppContext, DeviceType } from "../Models/AppContext";
+import { AppContext, DeviceType } from "../Context/AppContext";
 import LogoDesktop from "../resources/LogoDesktop.png";
 import LogoMobile from "../resources/LogoMobile.png";
 
