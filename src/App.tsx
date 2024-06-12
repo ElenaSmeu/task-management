@@ -1,11 +1,11 @@
 /* eslint-disable react/jsx-no-undef */
-import React, {Component, useContext} from 'react';
+import React, {useContext} from 'react';
 import LandingPage from './LandingPage';
 import { AppContext } from './Context/AppContext';
 import { useMediaQuery } from 'react-responsive';
 import Login from './Authentication/Login';
 import SignUp from './Authentication/Signup';
-import { Route, Router, Routes, Navigate } from 'react-router-dom';
+import { Route, Routes, Navigate } from 'react-router-dom';
 import AuthContext, { AuthProvider } from './Context/AuthContext';
 import Workspace from './Workspace/Workspace';
 
