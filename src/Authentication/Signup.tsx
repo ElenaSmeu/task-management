@@ -13,18 +13,23 @@ function SignUp( props: {appContext: AppContext}) {
     const [showPassword, setShowPassword] = useState(false);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [isError, setIsError] = useState(false);
     const navigate = useNavigate();
     const handleSignUp =  async () => {
         try {
             await createUserWithEmailAndPassword(auth, email, password);
             navigate("/login")
         } catch (error) {
+            setIsError(true);
             console.error("Error signing up:", error);
         }
     };
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
     };
+    const borderErrorClass = (hasError: boolean) => {
+       return  hasError ? "border-red-700" : "border-gray-300"
+    }
     return (
         <div className="bg-gray-100 techFont">
             <div className="p-4">
@@ -39,7 +44,7 @@ function SignUp( props: {appContext: AppContext}) {
                         placeholder="Email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+                        className= {"w-full px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 " + borderErrorClass(isError) }
                     />
                 </div>
             <div className="mb-4 relative">
@@ -48,7 +53,7 @@ function SignUp( props: {appContext: AppContext}) {
                         placeholder="Password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+                        className= { "w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 " + borderErrorClass(isError) }
                     />
                     <button
                         type="button"
@@ -66,6 +71,7 @@ function SignUp( props: {appContext: AppContext}) {
                 size="lg"
             />
             <Link to={"/login"} className="underline pt-4">Login</Link>
+            <div className="text-sm pt-10">*As this is a hobby project, please use any fake email for registration. For example, "testEmail@gmail.com".</div>
             </div>
         </div>
     </div>

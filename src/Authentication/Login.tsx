@@ -13,7 +13,7 @@ function Login(props: { appContext: AppContext }) {
     const [showPassword, setShowPassword] = useState(false);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-
+    const [isError, setIsError] = useState(false);
     const navigate = useNavigate();
     
     const handleLogin = async () => {
@@ -21,7 +21,7 @@ function Login(props: { appContext: AppContext }) {
             await signInWithEmailAndPassword( auth, email, password);
             navigate("/workspace");
         } catch (error) {
-            console.error("Error logging in:", error);
+            setIsError(true)
         }
     };
     
@@ -29,6 +29,9 @@ function Login(props: { appContext: AppContext }) {
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
     };
+    const borderErrorClass = (hasError: boolean) => {
+        return  hasError ? "border-red-700" : "border-gray-300"
+     }
 
     return (   
     <div className="techFont bg-gray-100">
@@ -45,7 +48,7 @@ function Login(props: { appContext: AppContext }) {
                         placeholder="Email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+                        className={"w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500" + borderErrorClass(isError)}
                     />
                 </div>
                 <div className="mb-4 relative">
@@ -54,7 +57,8 @@ function Login(props: { appContext: AppContext }) {
                         placeholder="Password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+                        className={"w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500" + borderErrorClass(isError)}
+
                     />
                     <button
                         type="button"
