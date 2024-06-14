@@ -4,15 +4,20 @@ import AuthContext from "../Context/AuthContext";
 import { Board } from "../CRUD/models";
 import Button from "../SharedComponents/Button";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { UUID } from "crypto";
+import Lists from "./Lists";
 
 function BoardPage() {
     const [boards, setBoards] = useState<Board[]>([]);
     const {currentUser, loading} = useContext(AuthContext);
+    const [selectedBoard, setSelectedBoard] = useState<string>("");
     useEffect(() => {
       const fetchBoards = async () => {
         const boardsData = await getBoardsByUser(currentUser.uid);
         console.log(boardsData);
-       // setBoards(boardsData);
+        const firstElementIdFromData = boardsData[0].id
+        setSelectedBoard(firstElementIdFromData);
+        setBoards(boardsData);
       };
       fetchBoards();
     }, []);
@@ -22,24 +27,26 @@ function BoardPage() {
         setBoards([...boards, newBoard]);
     }
     return (
-        <div className="flex flex-col p-4">
-        <ul>
-          {boards.map(board => (
-            <li key={board.id} className="flex flex-row">
-              <h2>{board.name} -  </h2>
-              <p>{board.description}</p>
-            </li>
-          ))
-          }
-        </ul>
-        <div className="mt-4">
-             <Button icon={faPlus}
-         label={"Create new Board"} size={"md"} 
-         onClick={handleCreateBoard}/>
+        <div className="flex flex-col">
+          <div className="flex flex-row w-full items-center px-4 pt-4">
+            <select value={selectedBoard} className="px-4 py-2 mr-4 bg-transparent rounded focus:outline-none focus:ring-2 focus:ring-green-500 cursor-pointer w-80"
+                onChange= {e => setSelectedBoard(e.target.value)} >
+              {
+                boards.map(board => 
+                (<option value={board.id}>{board.name}</option>)
+                )
+              }
+            </select>
+            <div >
+                <Button icon={faPlus}
+            label={"Create new Board"} 
+            buttonType={"secondary"}
+            size={"sm"} 
+            onClick={handleCreateBoard}/>
+            </div>
         </div>
-       
+          { selectedBoard ? <Lists boardId={selectedBoard}/> : <div></div>}
         </div>
-       
     );
   }
   

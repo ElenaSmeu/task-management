@@ -71,7 +71,7 @@ function SignUp( props: {appContext: AppContext}) {
                 size="lg"
             />
             <Link to={"/login"} className="underline pt-4">Login</Link>
-            <div className="text-sm pt-10">*As this is a hobby project, please use any fake email for registration. For example, "testEmail@gmail.com".</div>
+            <div className="text-sm pt-10 w-80">*As this is a hobby project, please use any fake email for registration. For example, "testEmail@gmail.com".</div>
             </div>
         </div>
     </div>
