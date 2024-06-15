@@ -23,10 +23,10 @@ export const createBoard = async (
     name,
     description,
     createdBy,
-    id: crypto.randomUUID(),
+    id: crypto.randomUUID() as UUID,
   };
   const boardRef = await addDoc(boardsCollection, newBoard);
-  return boardRef.id;
+  return boardRef.id as UUID;
 };
 
 export const getBoardsByUser = async (createdBy: string) => {
@@ -38,7 +38,7 @@ export const getBoardsByUser = async (createdBy: string) => {
   const boards = snapshot.docs.map((doc) => {
     const boardData = doc.data();
     return {
-      id: doc.id,
+      id: boardData.id as UUID,
       name: boardData.name,
       description: boardData.description,
       createdBy: boardData.createdBy,

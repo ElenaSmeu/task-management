@@ -14,17 +14,17 @@ import { List } from "./models";
 
 const listsCollection = collection(db, "lists");
 
-export const createList = async (name: string, boardId: string) => {
+export const createList = async (name: string, boardId: UUID) => {
   const newList: List = {
     name,
-    id: crypto.randomUUID(),
+    id: crypto.randomUUID() as UUID,
     boardId,
   };
   const boardRef = await addDoc(listsCollection, newList);
-  return boardRef.id;
+  return boardRef.id as UUID;
 };
 
-export const getListsOfBoard = async (boardId: string) => {
+export const getListsOfBoard = async (boardId: UUID) => {
   const boardBasedQuery = query(
     listsCollection,
     where("boardId", "==", boardId)
@@ -32,12 +32,16 @@ export const getListsOfBoard = async (boardId: string) => {
   const snapshot = await getDocs(boardBasedQuery);
   const lists = snapshot.docs.map((doc) => {
     const data = doc.data();
-    return { id: doc.id, name: data.name, boardId: data.boardId };
+    return {
+      id: doc.id as UUID,
+      name: data.name,
+      boardId: data.boardId as UUID,
+    };
   });
   return lists;
 };
 
-export const updateList = async (listId: string, updates: Partial<List>) => {
+export const updateList = async (listId: UUID, updates: Partial<List>) => {
   const listsDoc = doc(db, "lists", listId);
   await updateDoc(listsDoc, updates);
 };

@@ -1,17 +1,17 @@
-import { useCallback, useContext, useEffect, useState } from "react";
-import AuthContext from "../Context/AuthContext";
-import { Board, List } from "../CRUD/models";
+import {useEffect, useState } from "react";
+import { Board, List } from "../CRUD-Apis/models";
 import Button from "../SharedComponents/Button";
 import { faEllipsisH, faPlus } from "@fortawesome/free-solid-svg-icons";
-import { createList, getListsOfBoard } from "../CRUD/lists";
+import { createList, getListsOfBoard } from "../CRUD-Apis/lists";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Tasks from "./Tasks";
+import { UUID } from "crypto";
 
-function Lists(props: {boardId: string}) {
+function Lists(props: {boardId: UUID}) {
     const [lists, setLists] = useState<List[]>([]);
     useEffect(() => {
       const fetchLists = async () => {
         const listsData = await getListsOfBoard(props.boardId);
-        console.log(listsData);
         setLists(listsData);
       };
       fetchLists();
@@ -24,13 +24,13 @@ function Lists(props: {boardId: string}) {
     return (
         <div className="flex flex-row w-screen overflow-x-auto items-start p-4">
             {lists.map(list => 
-              <div className="bg-green-900 border rounded-lg border-gray-800 border-4 min-w-80 p-4 mr-4">
+              <div key={list.id} className="bg-green-900 border rounded-lg border-gray-800 border-4 min-w-80 mr-4">
                   <div className="flex flex-col min-h-56">
-                    <div className="flex flex-row text-gray-200 justify-between">
+                    <div className="flex flex-row text-gray-200 justify-between p-4">
                       <div className="text-lg">{list.name}</div>
-                      <FontAwesomeIcon className="cursor-pointer hover:bg-gray-100 hover:text-green-900 rounded p-1" icon={faEllipsisH}></FontAwesomeIcon>
+                      <FontAwesomeIcon className="cursor-pointer hover:bg-gray-100 hover:opacity-50 hover:text-green-900 rounded p-1" icon={faEllipsisH}></FontAwesomeIcon>
                     </div>
-                    <div>{list.boardId}</div>
+                    <Tasks listId={list.id}/>
                   </div>
               </div>
 
@@ -42,8 +42,6 @@ function Lists(props: {boardId: string}) {
          buttonType={"secondary"} 
          onClick={handleCreateList}/>
         </div>
-        {props.boardId}
-       
         </div>
        
     );
